@@ -1,6 +1,6 @@
 
-import { Job } from "../models/Job";
-import { Application } from "../models/Application";
+import { Job } from "../models/Job.js";
+import { Application } from "../models/Application.js";
 
 export const getEmployerJobs = async (req, res) => {
   const jobs = await Job.find({ postedBy: req.user.id });

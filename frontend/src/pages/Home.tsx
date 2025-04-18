@@ -1,30 +1,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, Search, Building2 } from 'lucide-react';
+import { Briefcase, Search, Building2, LogOut } from 'lucide-react';
 import { useStore } from '../store';
 
 function Home() {
   const isDarkMode = useStore((state) => state.isDarkMode);
+  const currentUser = useStore((state) => state.currentUser);
+  const setCurrentUser = useStore((state) => state.setCurrentUser);
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+  };
 
   return (
     <div className={`${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold mb-4">Find Your Dream Job Today</h1>
         <p className="text-xl mb-8">Connect with top employers and opportunities</p>
-        
-        <div className="flex justify-center gap-4">
+
+        <div className="flex justify-center gap-4 flex-wrap">
           <Link
             to="/jobs"
             className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
           >
             Browse Jobs
           </Link>
+
           <Link
             to="/register"
             className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition"
           >
             Post a Job
           </Link>
+
+          {currentUser && (
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition"
+            >
+              <LogOut size={20} /> Logout
+            </button>
+          )}
         </div>
       </div>
 

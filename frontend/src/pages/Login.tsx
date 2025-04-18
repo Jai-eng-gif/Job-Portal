@@ -13,17 +13,42 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const user = dummyUsers.find(u => u.email === email);
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const user = dummyUsers.find(u => u.email === email);
     
-    if (user) {
+  //   if (user) {
+  //     setCurrentUser(user);
+  //     navigate(`/${user.role}/dashboard`);
+  //   } else {
+  //     setError('Invalid credentials');
+  //   }
+  // };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) throw new Error(data.msg || 'Login failed');
+  
+      const { user, token } = data;
+  
+      // Store token if needed: localStorage.setItem('token', token);
       setCurrentUser(user);
+  
       navigate(`/${user.role}/dashboard`);
-    } else {
-      setError('Invalid credentials');
+    } catch (err: any) {
+      setError(err.message);
     }
   };
+
 
   return (
     <div className="max-w-md mx-auto">

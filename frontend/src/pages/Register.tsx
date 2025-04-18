@@ -15,11 +15,31 @@ function Register() {
     company: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would create a new user
-    // For this demo, just redirect to login
-    navigate('/login');
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        console.log("Registration successful:", data);
+        navigate('/login');
+      } else {
+        console.error("Registration failed:", data);
+        alert(data?.msg || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      alert("An error occurred while registering.");
+    }
+    
   };
 
   return (

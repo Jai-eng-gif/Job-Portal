@@ -1,19 +1,42 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { MapPin, Building2, Clock, BriefcaseIcon, Send } from 'lucide-react';
+import { Job } from '../types';
+
 import { useStore } from '../store';
-import { dummyJobs } from '../data';
 
 function JobDetails() {
   const { id } = useParams();
   const isDarkMode = useStore((state) => state.isDarkMode);
   const currentUser = useStore((state) => state.currentUser);
+  // const [job, setJob] = useState(null);
+  const [job, setJob] = useState<Job | null>(null);
+
   
-  const job = dummyJobs.find(j => j.id === id);
-  
-  if (!job) {
-    return <div>Job not found</div>;
-  }
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/jobs/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch job');
+        return res.json();
+      })
+      .then(data => {
+        setJob(data);
+        setLoading(false);
+        console.log(job);
+        
+      })
+      .catch(err => {
+        console.error(err);
+        setError('Failed to load job details');
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error || !job) return <div>{error || 'Job not found'}</div>;
 
   return (
     <div className={`${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -28,19 +51,15 @@ function JobDetails() {
               <span>{job.location}</span>
             </div>
             <div className="flex flex-wrap gap-2">
-              <span className={`px-4 py-2 rounded-full text-sm ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                {job.type}
-              </span>
-              <span className={`px-4 py-2 rounded-full text-sm ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                {job.category}
-              </span>
+              <span className={`px-4 py-2 rounded-full text-sm ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>{job.type}</span>
+              <span className={`px-4 py-2 rounded-full text-sm ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>{job.category}</span>
             </div>
           </div>
           <div className="text-right">
             <div className="text-2xl font-bold text-blue-600 mb-2">{job.salary}</div>
             <div className="flex items-center text-gray-500">
               <Clock className="w-5 h-5 mr-2" />
-              <span>Posted {job.postedDate}</span>
+              <span>Posted {new Date(job.postedDate).toLocaleDateString()}</span>
             </div>
           </div>
         </div>

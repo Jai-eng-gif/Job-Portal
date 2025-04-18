@@ -40,7 +40,14 @@ export const login = async (req, res) => {
             return res.status(401).json({ error: "Invalid username or password" });
         }
         const token = generateToken({ email: user.email, password: user.password });
-        return res.status(200).json({ msg: 'Login successful', token });
+        return res.status(200).json({ msg: 'Login successful', token ,user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            company: user.company || '',
+          }
+        });
 
 
     } catch (error) {

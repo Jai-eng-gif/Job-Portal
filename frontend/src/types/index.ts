@@ -1,5 +1,5 @@
 export interface Job {
-  id: string;
+  _id: string;
   title: string;
   company: string;
   location: string;
@@ -9,10 +9,12 @@ export interface Job {
   requirements: string[];
   postedDate: string;
   category: string;
+  postedBy: string;
+
 }
 
 export interface Application {
-  id: string;
+  _id: string;
   jobId: string;
   userId: string;
   status: 'pending' | 'reviewed' | 'rejected' | 'accepted';
@@ -22,7 +24,7 @@ export interface Application {
 }
 
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: 'employer' | 'jobseeker';
