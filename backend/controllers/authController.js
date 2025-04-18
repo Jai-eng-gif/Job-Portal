@@ -1,4 +1,5 @@
 import { User } from "../models/User.js";
+import { jwtAuthMiddleware,generateToken } from "../middleware/auth.js";
 
 
 // Register 
@@ -14,8 +15,13 @@ export const register = async (req, res) => {
         const response = await user.save()
         console.log("response", response);
 
+        const token = generateToken({ id: user._id, email: user.email, role: user.role });
+       
+
+
+
         if (response) {
-            return res.status(201).json({ msg: 'User created successfully' });
+            res.status(200).json({message:"Data is", response,token:token});
         }
         return res.status(500).json({ msg: 'Error creating user' });
 
@@ -33,8 +39,8 @@ export const login = async (req, res) => {
         if (!user || !await user.comparePassword(password)) {
             return res.status(401).json({ error: "Invalid username or password" });
         }
-        
-        return res.status(200).json({ msg: 'Login successful', user });
+        const token = generateToken({ email: user.email, password: user.password });
+        return res.status(200).json({ msg: 'Login successful', token });
 
 
     } catch (error) {
