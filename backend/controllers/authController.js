@@ -39,7 +39,7 @@ export const login = async (req, res) => {
         if (!user || !await user.comparePassword(password)) {
             return res.status(401).json({ error: "Invalid username or password" });
         }
-        const token = generateToken({ email: user.email, password: user.password });
+        const token = generateToken({ id: user._id, email: user.email,password:user.password, role: user.role });
         return res.status(200).json({ msg: 'Login successful', token ,user: {
             id: user._id,
             name: user.name,

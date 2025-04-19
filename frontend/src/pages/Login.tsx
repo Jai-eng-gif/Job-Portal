@@ -12,18 +12,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const user = dummyUsers.find(u => u.email === email);
-    
-  //   if (user) {
-  //     setCurrentUser(user);
-  //     navigate(`/${user.role}/dashboard`);
-  //   } else {
-  //     setError('Invalid credentials');
-  //   }
-  // };
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -40,7 +29,7 @@ function Login() {
   
       const { user, token } = data;
   
-      // Store token if needed: localStorage.setItem('token', token);
+      localStorage.setItem('token', token);
       setCurrentUser(user);
   
       navigate(`/${user.role}/dashboard`);

@@ -16,9 +16,9 @@ function JobSeekerDashboard() {
   const isDarkMode = useStore((state) => state.isDarkMode);
   const currentUser = useStore((state) => state.currentUser);
 
-  const userApplications = dummyApplications.filter(app => app.userId === currentUser?.id);
+  const userApplications = dummyApplications.filter(app => app.userId === currentUser?._id);
   const appliedJobs = userApplications.map(app => 
-    dummyJobs.find(job => job.id === app.jobId)
+    dummyJobs.find(job => job._id === app.jobId)
   ).filter(Boolean);
 
   return (
@@ -82,9 +82,9 @@ function JobSeekerDashboard() {
             </thead>
             <tbody>
               {userApplications.map((app, index) => {
-                const job = dummyJobs.find(j => j.id === app.jobId);
+                const job = dummyJobs.find(j => j._id === app.jobId);
                 return (
-                  <tr key={app.id} className={`${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}`}>
+                  <tr key={app._id} className={`${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}`}>
                     <td className="px-6 py-4">{job?.title}</td>
                     <td className="px-6 py-4">{job?.company}</td>
                     <td className="px-6 py-4">{app.appliedDate}</td>

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { MapPin, Building2, Clock, BriefcaseIcon, Send } from 'lucide-react';
+import { useParams,useNavigate } from 'react-router-dom';
+import { MapPin, Building2, Clock, Send } from 'lucide-react';
 import { Job } from '../types';
-
 import { useStore } from '../store';
 
 function JobDetails() {
   const { id } = useParams();
+    const navigate = useNavigate();
+  
   const isDarkMode = useStore((state) => state.isDarkMode);
   const currentUser = useStore((state) => state.currentUser);
-  // const [job, setJob] = useState(null);
   const [job, setJob] = useState<Job | null>(null);
-
-  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isApplying, setIsApplying] = useState(false); // New state for showing the apply form
+  const [coverLetter, setCoverLetter] = useState('');
+  const [resume, setResume] = useState<File | null>(null);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/jobs/${id}`)
@@ -25,8 +26,6 @@ function JobDetails() {
       .then(data => {
         setJob(data);
         setLoading(false);
-        console.log(job);
-        
       })
       .catch(err => {
         console.error(err);
@@ -34,6 +33,40 @@ function JobDetails() {
         setLoading(false);
       });
   }, [id]);
+
+  const handleApply = (e: React.FormEvent) => {
+    e.preventDefault();
+  
+    if (!coverLetter || !resume) {
+      alert('Please provide a cover letter and upload your resume.');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('coverLetter', coverLetter);
+    formData.append('resume', resume);
+    formData.append('jobId', id!); 
+  
+    fetch(`http://localhost:3000/api/applications`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,  
+      },
+      body: formData,
+    })
+      .then(res => res.json())
+      .then(data => {
+        alert('Application submitted successfully!');
+        setIsApplying(false);
+        navigate('/jobs');
+
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Failed to submit application');
+      });
+  };
+  
 
   if (loading) return <div>Loading...</div>;
   if (error || !job) return <div>{error || 'Job not found'}</div>;
@@ -65,10 +98,51 @@ function JobDetails() {
         </div>
 
         {currentUser?.role === 'jobseeker' && (
-          <button className="w-full md:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+          <button
+            onClick={() => setIsApplying(true)}
+            className="w-full md:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
+          >
             <Send className="w-5 h-5 mr-2" />
             Apply Now
           </button>
+        )}
+
+        {isApplying && (
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold mb-4">Apply for {job.title}</h2>
+            <form onSubmit={handleApply}>
+              <div className="mb-4">
+                <label htmlFor="coverLetter" className="block text-sm font-medium mb-1">Cover Letter</label>
+                <textarea
+                  id="coverLetter"
+                  className="w-full p-3 border rounded"
+                  rows={4}
+                  value={coverLetter}
+                  onChange={(e) => setCoverLetter(e.target.value)}
+                  required
+                ></textarea>
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="resume" className="block text-sm font-medium mb-1">Resume</label>
+                <input
+                  type="file"
+                  id="resume"
+                  accept=".pdf,.doc,.docx"
+                  className="w-full p-3 border rounded"
+                  onChange={(e) => setResume(e.target.files?.[0] || null)}
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
+              >
+                Submit Application
+              </button>
+            </form>
+          </div>
         )}
       </div>
 

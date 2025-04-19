@@ -13,7 +13,9 @@ export const getApplicantsForJob = async (req, res) => {
 };
 
 export const getJobseekerApplications = async (req, res) => {
-  const apps = await Application.find({ userId: req.user.id }).populate('jobId');
+  const apps = await Application.find({ userId: req.user.user.id }).populate('jobId');
+  console.log('user id',req.user.user.id);
+  
   res.json(apps);
 };
 
