@@ -15,7 +15,11 @@ export interface Job {
 
 export interface Application {
   _id: string;
-  jobId: string;
+  jobId: {
+    title: string;
+    company: string;
+    
+  };
   userId: string;
   status: 'pending' | 'reviewed' | 'rejected' | 'accepted';
   appliedDate: string;
