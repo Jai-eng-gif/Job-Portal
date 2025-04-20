@@ -54,6 +54,8 @@ export const createApplication = async (req, res) => {
   try {
     // Convert resume file buffer to base64 string
     const base64Resume = file.buffer.toString('base64');
+    console.log('base64Resume:', base64Resume);
+    
 
     // Optional: Save MIME type for future download (e.g., PDF)
     const mimeType = file.mimetype;
@@ -65,8 +67,10 @@ export const createApplication = async (req, res) => {
       resume: base64Resume,
       status: 'pending',
     });
-
+    
+    
     await application.save();
+    console.log('application:', application);
     res.status(201).json({ message: 'Application submitted successfully', application });
   } catch (err) {
     console.error('Error saving application:', err);

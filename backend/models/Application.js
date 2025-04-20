@@ -7,10 +7,10 @@ const applicationSchema = new mongoose.Schema({
   appliedDate: { type: Date, default: Date.now },
   coverLetter: { type: String, required: true },
   resume: {
-    data: String,
-    contentType: String,
-    originalName: String
+    type: String,
+    required: true,
   }
+  
   
 });
 
