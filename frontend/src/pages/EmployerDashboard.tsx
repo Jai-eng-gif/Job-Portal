@@ -39,7 +39,7 @@ function EmployerDashboard() {
   const [applications, setApplications] = useState<ApplicationDisplay[]>([]);
   const [selectedApplication, setSelectedApplication] =
     useState<ApplicationDisplay | null>(null);
-    const[totalJobs,setTotalJobs]=useState<any[]>([]);
+  const [totalJobs, setTotalJobs] = useState<any[]>([]);
 
   const employerJobs = dummyJobs.filter(
     (job) => job.company === currentUser?.company
@@ -66,66 +66,69 @@ function EmployerDashboard() {
     };
     fetchApplications();
   }, [selectedApplication]);
-  console.log('application data',applications);
-  
+  console.log("application data", applications);
 
   // get total job postings by employer
-   useEffect(() => {
-      const fetchJobs = async () => {
-        const token = localStorage.getItem("token");
-        if (!currentUser || !token || !currentUser.company) return;
-  
-        try {
-          const response = await fetch(
-            `https://job-portal-backend-two-ashen.vercel.app/api/jobs/bycompany?company=${currentUser.company}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-  
-          if (!response.ok) {
-            throw new Error("Failed to fetch jobs");
+  useEffect(() => {
+    const fetchJobs = async () => {
+      const token = localStorage.getItem("token");
+      if (!currentUser || !token || !currentUser.company) return;
+
+      try {
+        const response = await fetch(
+          `https://job-portal-backend-two-ashen.vercel.app/api/jobs/bycompany?company=${currentUser.company}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-  
-          const data = await response.json();
-          setTotalJobs(data);
-        } catch (err) {
-          console.error("Failed to fetch jobs:", err);
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch jobs");
         }
-      };
-  
-      fetchJobs();
-    }, [currentUser]);
 
+        const data = await response.json();
+        setTotalJobs(data);
+      } catch (err) {
+        console.error("Failed to fetch jobs:", err);
+      }
+    };
 
-  const handleStatusUpdate = async (application:{userId:string,status:string,jobId:string,applicationId:string}) => {
+    fetchJobs();
+  }, [currentUser]);
+
+  const handleStatusUpdate = async (application: {
+    userId: string;
+    status: string;
+    jobId: string;
+    applicationId: string;
+  }) => {
     console.log("Updating status for application:", application);
-    
+
     try {
-      const response = await fetch(`https://job-portal-backend-two-ashen.vercel.app/api/dashboard/${application.applicationId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ status: application.status }),
-      });
-  
+      const response = await fetch(
+        `https://job-portal-backend-two-ashen.vercel.app/api/dashboard/${application.applicationId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ status: application.status }),
+        }
+      );
+
       const result = await response.json();
-      console.log('Status updated:', result);      
+      console.log("Status updated:", result);
       setSelectedApplication(null);
-      
     } catch (error) {
-      console.error('Failed to update status:', error);
-      alert('Failed to update status');
+      console.error("Failed to update status:", error);
+      alert("Failed to update status");
     }
   };
   console.log(selectedApplication);
-  
-  
 
   return (
     <div className={`${isDarkMode ? "text-white" : "text-gray-900"}`}>
@@ -280,87 +283,84 @@ function EmployerDashboard() {
 
       {/* Modal */}
       {selectedApplication && (
-  <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-    <div
-      className={`${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-      } p-6 rounded-xl shadow-lg max-w-md w-full`}
-    >
-      <h3 className="text-xl font-bold mb-4">Application Details</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+          <div
+            className={`${
+              isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+            } p-6 rounded-xl shadow-lg max-w-md w-full`}
+          >
+            <h3 className="text-xl font-bold mb-4">Application Details</h3>
 
-      <p>
-        <strong>Job Title:</strong> {selectedApplication.jobTitle}
-      </p>
-      <p>
-        <strong>Applicant Name:</strong> {selectedApplication.applicantName}
-      </p>
-      <p>
-        <strong>Email:</strong> {selectedApplication.applicantEmail || "N/A"}
-      </p>
-      <p>
-        <strong>Date Applied:</strong> {selectedApplication.appliedDate}
-      </p>
-      
-      
-      <div className="mb-3">
-        <label className="block font-semibold mb-1">
-          Status:
-        </label>
-        <select
-          className={`w-full border rounded px-3 py-2 outline-none ${
-            isDarkMode
-              ? "bg-gray-800 text-white border-gray-700"
-              : "bg-white text-gray-900 border-gray-300"
-          }`}
-          value={selectedApplication.status}
-          onChange={(e) =>
-            setSelectedApplication({
-              ...selectedApplication,
-              status: e.target.value,
-            })
-          }
-        >
-          <option value="pending">Pending</option>
-          <option value="accepted">Accepted</option>
-          <option value="rejected">Rejected</option>
-        </select>
-      </div>
+            <p>
+              <strong>Job Title:</strong> {selectedApplication.jobTitle}
+            </p>
+            <p>
+              <strong>Applicant Name:</strong>{" "}
+              {selectedApplication.applicantName}
+            </p>
+            <p>
+              <strong>Email:</strong>{" "}
+              {selectedApplication.applicantEmail || "N/A"}
+            </p>
+            <p>
+              <strong>Date Applied:</strong> {selectedApplication.appliedDate}
+            </p>
 
-      <p>
-        <strong>Cover Letter:</strong> {selectedApplication.coverLetter}
-      </p>
+            <div className="mb-3">
+              <label className="block font-semibold mb-1">Status:</label>
+              <select
+                className={`w-full border rounded px-3 py-2 outline-none ${
+                  isDarkMode
+                    ? "bg-gray-800 text-white border-gray-700"
+                    : "bg-white text-gray-900 border-gray-300"
+                }`}
+                value={selectedApplication.status}
+                onChange={(e) =>
+                  setSelectedApplication({
+                    ...selectedApplication,
+                    status: e.target.value,
+                  })
+                }
+              >
+                <option value="pending">Pending</option>
+                <option value="accepted">Accepted</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
 
-      <p>
-        <strong>Resume:</strong>{" "}
-        <a
-          href={`https://job-portal-backend-two-ashen.vercel.app/${selectedApplication.resume})}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline"
-        >
-          Download Resume
-        </a>
-      </p>
+            <p>
+              <strong>Cover Letter:</strong> {selectedApplication.coverLetter}
+            </p>
 
-      {/* Submit Button */}
-      <div className="mt-4 text-right">
-        <button
-          onClick={() => handleStatusUpdate(selectedApplication)}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mr-2"
-        >
-          Submit
-        </button>
-        <button
-          onClick={() => setSelectedApplication(null)}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+            <p>
+              <strong>Resume:</strong>{" "}
+              <a
+                href={`data:application/pdf;base64,${selectedApplication.resume}`}
+                download={`resume-${selectedApplication.applicantName}.pdf`}
+                className="text-blue-600 underline"
+              >
+                Download Resume
+              </a>
+            </p>
 
+            {/* Submit Button */}
+            <div className="mt-4 text-right">
+              <button
+                onClick={() => handleStatusUpdate(selectedApplication)}
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mr-2"
+              >
+                Submit
+              </button>
+              <button
+                onClick={() => setSelectedApplication(null)}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
