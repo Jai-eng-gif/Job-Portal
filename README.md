@@ -5,7 +5,7 @@ This is the backend API for a MERN Stack **Job Portal** application. It provides
 
 
 
-## 🚀 Technologies Used
+## Technologies Used
 
 - **Node.js & Express.js**
 - **MongoDB with Mongoose**
