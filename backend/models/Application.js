@@ -6,7 +6,12 @@ const applicationSchema = new mongoose.Schema({
   status: { type: String, enum: ['pending', 'accepted', 'rejected'], required: true },
   appliedDate: { type: Date, default: Date.now },
   coverLetter: { type: String, required: true },
-  resume: { type: String, required: true }
+  resume: {
+    data: String,
+    contentType: String,
+    originalName: String
+  }
+  
 });
 
 export const Application = mongoose.model('Application', applicationSchema);
