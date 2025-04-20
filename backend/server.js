@@ -15,7 +15,6 @@ const __dirname = path.dirname(__filename);
 
 
 const app = express()
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json()) 
 app.use(cors());
 
@@ -30,9 +29,6 @@ app.use('/api/auth', authRoutes)
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

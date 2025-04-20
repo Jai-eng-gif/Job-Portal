@@ -7,7 +7,7 @@ import { useStore } from "../store";
 
 function EmployePostedJob() {
   const isDarkMode = useStore((state) => state.isDarkMode);
-//   const [jobs, setJobs] = useState([]);
+
 const [jobs, setJobs] = useState<any[]>([]);
 
   const [searchTerm, setSearchTerm] = useState("");

@@ -3,8 +3,6 @@ import { jwtAuthMiddleware,generateToken } from "../middleware/auth.js";
 
 
 // Register 
-
-
 export const register = async (req, res) => {
     try {
         const { name, email, password, role, company } = req.body;
