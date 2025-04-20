@@ -138,6 +138,68 @@ cd Job-Portal/backend
 | GET    | `/api/dashboard/jobseeker/applications` | ✅   | Get applications submitted by jobseeker |
 
 ---
+Got it! Since you're putting this in your `README.md`, here's a **clean and concise section** you can directly include under a heading like `## 🗂 Data Models`:
+
+---
+
+## 🗂 Data Models
+
+### 👤 User
+
+```js
+{
+  name: String,
+  email: String, // unique
+  password: String, // hashed using bcrypt
+  role: 'jobseeker' | 'employer',
+  company?: String // only for employers
+}
+```
+
+- Passwords are securely hashed before saving.
+- Role determines access level (job posting or job seeking).
+- `comparePassword()` method is available for login verification.
+
+---
+
+### 💼 Job
+
+```js
+{
+  title: String,
+  company: String,
+  location: String,
+  type: String, // e.g., Full-time, Part-time
+  salary: String,
+  description: String,
+  requirements: [String],
+  postedDate: Date,
+  category: String,
+  postedBy: ObjectId (ref: 'User')
+}
+```
+
+- Linked to the employer via `postedBy`.
+
+---
+
+### 📝 Application
+
+```js
+{
+  jobId: ObjectId (ref: 'Job'),
+  userId: ObjectId (ref: 'User'),
+  status: 'pending' | 'accepted' | 'rejected',
+  appliedDate: Date,
+  coverLetter: String,
+  resume: String // file URL or path
+}
+```
+
+- Connects jobseekers with jobs they apply to.
+- Employers can update the application `status`.
+
+---
 
 ## 📎 Resume Uploads
 
