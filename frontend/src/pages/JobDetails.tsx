@@ -107,43 +107,64 @@ function JobDetails() {
           </button>
         )}
 
-        {isApplying && (
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">Apply for {job.title}</h2>
-            <form onSubmit={handleApply}>
-              <div className="mb-4">
-                <label htmlFor="coverLetter" className="block text-sm font-medium mb-1">Cover Letter</label>
-                <textarea
-                  id="coverLetter"
-                  className="w-full p-3 border rounded"
-                  rows={4}
-                  value={coverLetter}
-                  onChange={(e) => setCoverLetter(e.target.value)}
-                  required
-                ></textarea>
-              </div>
+{isApplying && (
+  <div className="mt-8">
+    <h2
+      className={`text-2xl font-bold mb-4 ${
+        isDarkMode ? "text-white" : "text-black"
+      }`}
+    >
+      Apply for {job.title}
+    </h2>
+    <form onSubmit={handleApply}>
+      <div className="mb-4">
+        <label
+          htmlFor="coverLetter"
+          className={`block text-sm font-medium mb-1 ${
+            isDarkMode ? "text-white" : "text-black"
+          }`}
+        >
+          Cover Letter
+        </label>
+        <textarea
+          id="coverLetter"
+          className="w-full p-3 border rounded bg-white text-black"
+          rows={4}
+          value={coverLetter}
+          onChange={(e) => setCoverLetter(e.target.value)}
+          required
+        ></textarea>
+      </div>
 
-              <div className="mb-4">
-                <label htmlFor="resume" className="block text-sm font-medium mb-1">Resume</label>
-                <input
-                  type="file"
-                  id="resume"
-                  accept=".pdf,.doc,.docx"
-                  className="w-full p-3 border rounded"
-                  onChange={(e) => setResume(e.target.files?.[0] || null)}
-                  required
-                />
-              </div>
+      <div className="mb-4">
+        <label
+          htmlFor="resume"
+          className={`block text-sm font-medium mb-1 ${
+            isDarkMode ? "text-white" : "text-black"
+          }`}
+        >
+          Resume
+        </label>
+        <input
+          type="file"
+          id="resume"
+          accept=".pdf,.doc,.docx"
+          className="w-full p-3 border rounded bg-white text-black"
+          onChange={(e) => setResume(e.target.files?.[0] || null)}
+          required
+        />
+      </div>
 
-              <button
-                type="submit"
-                className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
-              >
-                Submit Application
-              </button>
-            </form>
-          </div>
-        )}
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
+      >
+        Submit Application
+      </button>
+    </form>
+  </div>
+)}
+
       </div>
 
       <div className="grid md:grid-cols-3 gap-8">

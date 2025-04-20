@@ -1,8 +1,8 @@
-import { Job, Application, User } from '../types';
+import { Job, Application, User, Application1 } from '../types';
 
 export const dummyJobs: Job[] = [
   {
-    id: '1',
+    _id: '1',
     title: 'Senior React Developer',
     company: 'TechCorp Inc.',
     location: 'Remote',
@@ -16,9 +16,10 @@ export const dummyJobs: Job[] = [
     ],
     postedDate: '2024-03-10',
     category: 'Development',
+    postedBy:'2'
   },
   {
-    id: '2',
+    _id: '2',
     title: 'UI/UX Designer',
     company: 'DesignHub',
     location: 'New York, NY',
@@ -32,9 +33,11 @@ export const dummyJobs: Job[] = [
     ],
     postedDate: '2024-03-09',
     category: 'Design',
+    postedBy:'2'
   },
   {
-    id: '3',
+    
+    _id: '3',
     title: 'Marketing Manager',
     company: 'GrowthCo',
     location: 'San Francisco, CA',
@@ -48,12 +51,13 @@ export const dummyJobs: Job[] = [
     ],
     postedDate: '2024-03-08',
     category: 'Marketing',
+    postedBy:'2'
   },
 ];
 
-export const dummyApplications: Application[] = [
+export const dummyApplications: Application1[] = [
   {
-    id: '1',
+    _id: '1',
     jobId: '1',
     userId: '1',
     status: 'pending',
@@ -62,7 +66,7 @@ export const dummyApplications: Application[] = [
     resume: 'https://example.com/resume.pdf',
   },
   {
-    id: '2',
+    _id: '2',
     jobId: '2',
     userId: '1',
     status: 'accepted',
@@ -71,7 +75,7 @@ export const dummyApplications: Application[] = [
     resume: 'https://example.com/resume.pdf',
   },
   {
-    id: '3',
+    _id: '3',
     jobId: '3',
     userId: '1',
     status: 'rejected',
@@ -83,13 +87,13 @@ export const dummyApplications: Application[] = [
 
 export const dummyUsers: User[] = [
   {
-    id: '1',
+    _id: '1',
     name: 'John Doe',
     email: 'john@example.com',
     role: 'jobseeker',
   },
   {
-    id: '2',
+    _id: '2',
     name: 'Jane Smith',
     email: 'jane@techcorp.com',
     role: 'employer',

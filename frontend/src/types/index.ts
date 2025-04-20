@@ -13,6 +13,16 @@ export interface Job {
 
 }
 
+export interface Application1 {
+  _id: string;
+  jobId: string;
+  userId: string;
+  status: 'pending' | 'reviewed' | 'rejected' | 'accepted';
+  appliedDate: string;
+  coverLetter: string;
+  resume: string;
+}
+
 export interface Application {
   _id: string;
   jobId: {

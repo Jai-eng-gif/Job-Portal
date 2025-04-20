@@ -39,6 +39,7 @@ function EmployerDashboard() {
   const [applications, setApplications] = useState<ApplicationDisplay[]>([]);
   const [selectedApplication, setSelectedApplication] =
     useState<ApplicationDisplay | null>(null);
+    const[totalJobs,setTotalJobs]=useState<any[]>([]);
 
   const employerJobs = dummyJobs.filter(
     (job) => job.company === currentUser?.company
@@ -65,6 +66,37 @@ function EmployerDashboard() {
     };
     fetchApplications();
   }, [selectedApplication]);
+
+  // get total job postings by employer
+   useEffect(() => {
+      const fetchJobs = async () => {
+        const token = localStorage.getItem("token");
+        if (!currentUser || !token || !currentUser.company) return;
+  
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/jobs/bycompany?company=${currentUser.company}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+  
+          if (!response.ok) {
+            throw new Error("Failed to fetch jobs");
+          }
+  
+          const data = await response.json();
+          setTotalJobs(data);
+        } catch (err) {
+          console.error("Failed to fetch jobs:", err);
+        }
+      };
+  
+      fetchJobs();
+    }, [currentUser]);
 
 
   const handleStatusUpdate = async (application:{userId:string,status:string,jobId:string,applicationId:string}) => {
@@ -105,7 +137,7 @@ function EmployerDashboard() {
           {
             title: "Active Jobs",
             color: "text-blue-600",
-            value: employerJobs.length,
+            value: totalJobs.length,
           },
           {
             title: "Total Applications",
@@ -265,13 +297,17 @@ function EmployerDashboard() {
         <strong>Date Applied:</strong> {selectedApplication.appliedDate}
       </p>
       
-      {/* Status Dropdown */}
+      
       <div className="mb-3">
         <label className="block font-semibold mb-1">
           Status:
         </label>
         <select
-          className="w-full border rounded px-3 py-2"
+          className={`w-full border rounded px-3 py-2 outline-none ${
+            isDarkMode
+              ? "bg-gray-800 text-white border-gray-700"
+              : "bg-white text-gray-900 border-gray-300"
+          }`}
           value={selectedApplication.status}
           onChange={(e) =>
             setSelectedApplication({
