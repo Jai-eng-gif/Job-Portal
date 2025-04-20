@@ -10,9 +10,10 @@ const jwtAuthMiddleware =async (req,res,next)=>{
         return res.status(401).json({error: 'No token provided'});
     }
     try {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);        
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);         
         req.user = decoded;
-        console.log(decoded);
+        console.log("decoded",decoded);
+        
         
         next();
         
@@ -23,7 +24,9 @@ const jwtAuthMiddleware =async (req,res,next)=>{
 }
 
 const generateToken = (userData) => {
-    const token = jwt.sign({ user: userData }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ user: userData }, process.env.SECRET_KEY, { expiresIn: '8h' });
+    // console.log("token",token);
+    
     return token;
 }
 

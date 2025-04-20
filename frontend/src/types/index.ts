@@ -34,3 +34,18 @@ export interface User {
   role: 'employer' | 'jobseeker';
   company?: string;
 }
+
+export interface ApplicationDisplay {
+  _id: string;
+  userId: string;
+  applicationId: string;
+  jobTitle: string;
+  email: string;
+  coverLetter: string;
+  applicantName: string;
+  resume: string;
+  applicantEmail: string;
+  appliedDate: string;
+  status: string;
+  jobId: string;
+}
