@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "server.js"
+      }
+    ],
+    "env": {
+      "DB_URI": "mongodb+srv://gawande20jai:krsna02@cluster0.gkmxv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"      
+    }
+  }
+  
