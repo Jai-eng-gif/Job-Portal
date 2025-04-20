@@ -29,9 +29,12 @@ function JobSeekerDashboard() {
   const userApplications = dummyApplications.filter(
     (app) => app.userId === currentUser?._id
   );
-  const appliedJobs = userApplications
-    .map((app) => dummyJobs.find((job) => job._id === app.jobId))
-    .filter(Boolean);
+  console.log('userApplications',userApplications);
+  
+//   const appliedJobs = userApplications
+//     .map((app) => dummyJobs.find((job) => job._id === app.jobId))
+//     .filter(Boolean);
+// console.log('appliedJobs',appliedJobs);
 
   useEffect(() => {
     const fetchApplications = async () => {
