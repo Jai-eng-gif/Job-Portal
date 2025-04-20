@@ -21,6 +21,9 @@ app.use(cors());
 
 const port = 3000
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 // All Route 
 app.use('/api/auth', authRoutes)
