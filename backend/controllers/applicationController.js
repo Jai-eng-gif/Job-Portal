@@ -62,11 +62,7 @@ export const createApplication = async (req, res) => {
       jobId,
       userId,
       coverLetter,
-      resume: {
-        data: base64Resume,
-        contentType: mimeType,
-        originalName: file.originalname,
-      },
+      resume: base64Resume,
       status: 'pending',
     });
 

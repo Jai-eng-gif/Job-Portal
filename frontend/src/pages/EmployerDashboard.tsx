@@ -66,6 +66,8 @@ function EmployerDashboard() {
     };
     fetchApplications();
   }, [selectedApplication]);
+  console.log('application data',applications);
+  
 
   // get total job postings by employer
    useEffect(() => {
@@ -121,6 +123,8 @@ function EmployerDashboard() {
       alert('Failed to update status');
     }
   };
+  console.log(selectedApplication);
+  
   
 
   return (
@@ -329,7 +333,7 @@ function EmployerDashboard() {
       <p>
         <strong>Resume:</strong>{" "}
         <a
-          href={`https://job-portal-backend-two-ashen.vercel.app/${selectedApplication.resume.replace(/\\/g, "/")}`}
+          href={`https://job-portal-backend-two-ashen.vercel.app/${selectedApplication.resume})}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline"
