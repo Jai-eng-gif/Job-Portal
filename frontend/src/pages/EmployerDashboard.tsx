@@ -336,7 +336,8 @@ function EmployerDashboard() {
               <strong>Resume:</strong>{" "}
               <a
                 href={`data:application/pdf;base64,${selectedApplication.resume}`}
-                download={`resume-${selectedApplication.applicantName}.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-blue-600 underline"
               >
                 Download Resume
