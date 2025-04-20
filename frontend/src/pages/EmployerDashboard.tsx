@@ -332,12 +332,12 @@ function EmployerDashboard() {
               <strong>Cover Letter:</strong> {selectedApplication.coverLetter}
             </p>
 
+             
             <p>
               <strong>Resume:</strong>{" "}
               <a
                 href={`data:application/pdf;base64,${selectedApplication.resume}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                download="resume.pdf" // Force download with the name "resume.pdf"
                 className="text-blue-600 underline"
               >
                 Download Resume
