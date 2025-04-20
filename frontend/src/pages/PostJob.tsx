@@ -32,7 +32,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     const token = localStorage.getItem('token');
   
     try {
-      const response = await fetch('http://localhost:3000/api/jobs', {
+      const response = await fetch('https://job-portal-backend-two-ashen.vercel.app/api/jobs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

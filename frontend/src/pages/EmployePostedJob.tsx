@@ -22,7 +22,7 @@ const [jobs, setJobs] = useState<any[]>([]);
 
       try {
         const response = await fetch(
-          `http://localhost:3000/api/jobs/bycompany?company=${currentUser.company}`,
+          `https://job-portal-backend-two-ashen.vercel.app/api/jobs/bycompany?company=${currentUser.company}`,
           {
             method: "GET",
             headers: {
@@ -53,7 +53,7 @@ const [jobs, setJobs] = useState<any[]>([]);
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/jobs/${jobId}`, {
+      const response = await fetch(`https://job-portal-backend-two-ashen.vercel.app/api/jobs/${jobId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

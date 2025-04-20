@@ -49,7 +49,7 @@ function EmployerDashboard() {
     const fetchApplications = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/dashboard/employer/applicants",
+          "https://job-portal-backend-two-ashen.vercel.app/api/dashboard/employer/applicants",
           {
             method: "GET",
             headers: {
@@ -75,7 +75,7 @@ function EmployerDashboard() {
   
         try {
           const response = await fetch(
-            `http://localhost:3000/api/jobs/bycompany?company=${currentUser.company}`,
+            `https://job-portal-backend-two-ashen.vercel.app/api/jobs/bycompany?company=${currentUser.company}`,
             {
               method: "GET",
               headers: {
@@ -103,7 +103,7 @@ function EmployerDashboard() {
     console.log("Updating status for application:", application);
     
     try {
-      const response = await fetch(`http://localhost:3000/api/dashboard/${application.applicationId}`, {
+      const response = await fetch(`https://job-portal-backend-two-ashen.vercel.app/api/dashboard/${application.applicationId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -329,7 +329,7 @@ function EmployerDashboard() {
       <p>
         <strong>Resume:</strong>{" "}
         <a
-          href={`http://localhost:3000/${selectedApplication.resume.replace(/\\/g, "/")}`}
+          href={`https://job-portal-backend-two-ashen.vercel.app/${selectedApplication.resume.replace(/\\/g, "/")}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline"

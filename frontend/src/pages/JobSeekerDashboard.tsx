@@ -40,7 +40,7 @@ function JobSeekerDashboard() {
     const fetchApplications = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/dashboard/jobseeker/applications",
+          "https://job-portal-backend-two-ashen.vercel.app/api/dashboard/jobseeker/applications",
           {
             method: "GET",
             headers: {

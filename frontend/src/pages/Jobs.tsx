@@ -13,7 +13,7 @@ function Jobs() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/jobs');
+        const response = await fetch('https://job-portal-backend-two-ashen.vercel.app/api/jobs');
         const data = await response.json();
         setJobs(data);
       } catch (err) {

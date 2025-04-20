@@ -18,7 +18,7 @@ function JobDetails() {
   const [resume, setResume] = useState<File | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/jobs/${id}`)
+    fetch(`https://job-portal-backend-two-ashen.vercel.app/api/jobs/${id}`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch job');
         return res.json();
@@ -47,7 +47,7 @@ function JobDetails() {
     formData.append('resume', resume);
     formData.append('jobId', id!); 
   
-    fetch(`http://localhost:3000/api/applications`, {
+    fetch(`https://job-portal-backend-two-ashen.vercel.app/api/applications`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,  

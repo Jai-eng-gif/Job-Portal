@@ -20,7 +20,7 @@ const UpdateJob = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/jobs/${jobId}`);
+        const res = await fetch(`https://job-portal-backend-two-ashen.vercel.app/api/jobs/${jobId}`);
         const job = await res.json();
         console.log("Fetched Job:", job);
 
@@ -66,7 +66,7 @@ const UpdateJob = () => {
     };
   
     try {
-      const res = await fetch(`http://localhost:3000/api/jobs/${jobId}`, {
+      const res = await fetch(`https://job-portal-backend-two-ashen.vercel.app/api/jobs/${jobId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
