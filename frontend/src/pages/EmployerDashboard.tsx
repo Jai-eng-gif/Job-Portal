@@ -288,7 +288,7 @@ function EmployerDashboard() {
         <strong>Job Title:</strong> {selectedApplication.jobTitle}
       </p>
       <p>
-        <strong>Applicant:</strong> {selectedApplication.applicantName}
+        <strong>Applicant Name:</strong> {selectedApplication.applicantName}
       </p>
       <p>
         <strong>Email:</strong> {selectedApplication.applicantEmail || "N/A"}
